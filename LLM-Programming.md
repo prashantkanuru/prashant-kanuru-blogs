@@ -15,4 +15,9 @@ are evaluated and added to the prompt
 - **For derivation-free optimization** optimization algorithm needs to be customized for an individual task to deal with the specific challenges posed by the decision space and the performance landscape.
 
 ### How does OPRO handle Optimization
+- Describe the optimization problem in natural language, then instructe the LLM to iteratively generate new solutions based on the problem description and the previously found solutions.
+- Why LLMs - Generalization: Optimization with LLMs enables quick adaptation to different tasks by changing the problem description in the prompt, and the optimization process can be customized by adding instructions to specify the desired properties of the solutions.
+
+### Optimization Problems tackled in the research paper:
+- Linear regression and travelling salesman problem  - two classical optimization problems that underpin many optimization problems in mathematics, computer science and operations research.
 - 
