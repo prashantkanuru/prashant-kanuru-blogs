@@ -19,7 +19,10 @@ Its core idea is to treat a CAD model, often represented as a sequence of featur
     - Object Segmentation
     - Pixel Segmentation
     - Instance Segmentation
-
+### Few pointers to the architecture:
+- The research papers around mainly cover the DL architectures around SWIN (Hierarchical Attention) and DETR -- (DETR) -- End to End Object Detection Transformer. DETR is for combining the segmentations into one architecture and these two are used well by Mask2Former which adds in the concept of Binary Masks i.e. N binary masks for N pixel segments in a image.
+- Company's Microsoft and Meta, the creators of SAM (1,2,3) and Florence have created the SWIN and Mask2Former, possibly building up and refining from the core architectures.
+- Especially the ability to combine all types of segmentations into one DL architecture is also achieved through N-Segments Binary Masks and the corresponding N Categories.
 
 
 ### How the CAD Transformer looks at a DXF
