@@ -14,11 +14,15 @@ The Jacobian matrix, $J_f$, is essentially the generalization of the derivative 
 
 **Definition**
 For a vector valued function $f:\mathbb{R}^n \to \mathbb{R}^m$, which maps $n$ input variables $\mathbf{x} = [x_1, \dots, x_n]^T$ to $m$ output variables $\mathbf{f} = [f_1, \dots, f_m]^T$, the Jacobian matrix $J_f$ is an $m \times n$ matrix where the element in the $i$-th row and $j$-th column is the partial derivative of the $i$-th output with respect to the $j$-th input:
-$$J_f = \frac{\partial\mathbf{f}}{\partial \mathbf{x}} = \begin{bmatrix}\frac{\partialf_1}{\partialx_1} & \frac{\partial f_1}{\partial f_1}{\partialx_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\
+
+$$
+J_f = \frac{\partial\mathbf{f}}{\partial \mathbf{x}} = \begin{bmatrix}
+\frac{\partialf_1}{\partialx_1} & \frac{\partial f_1}{\partial f_1}{\partialx_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\
 \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n }\\
 \vdots & \vdots & \ddots & \vdots \\
 \frac{\partial f_m}{\partial x_1} & \frac{\partial f_m}{\partial f_m}{\partial x_2} & \cdots &\frac{\partial f_m}{\partial x_n}
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 ### Vector Jacobian Product (VJP) - Reverse Mode (BackPropagation)
 THe VJP Computes the product $\mathbf{x}^T = \mathbf{w}^T \cdot J_f$ 
