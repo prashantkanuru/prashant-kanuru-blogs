@@ -11,6 +11,17 @@ The architectural differences arise from when the visual and textual features ar
 ## CAD Transformer
 Its core idea is to treat a CAD model, often represented as a sequence of features or operations (e.g., *sketch circle*, ) as a `sentence` or a sequence of `tokens` that the model can learn to understand and generate.
 
+## Important Architectural Features:
+- Localized Attention (Mask2Former -- uses SWIN Transformer)
+- Segmentation - Unified segmentation by combining the following segmentations:
+    - Panoptic Segmentation
+    - Semantic Segmentation
+    - Object Segmentation
+    - Pixel Segmentation
+    - Instance Segmentation
+
+
+
 ### How the CAD Transformer looks at a DXF
 
 ## Vectorized Image to CAD- DXF vs. PNG:
