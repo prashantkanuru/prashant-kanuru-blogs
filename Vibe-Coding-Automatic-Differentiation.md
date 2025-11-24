@@ -17,7 +17,7 @@ For a vector valued function $f:\mathbb{R}^n \to \mathbb{R}^m$, which maps $n$ i
 
 $$
 J_f = \frac{\partial\mathbf{f}}{\partial \mathbf{x}} = \begin{bmatrix}
-\frac{\partialf_1}{\partialx_1} & \frac{\partial f_1}{\partial f_1}{\partialx_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\
+\frac{\partial f_1}{\partial x_1} & \frac{\partial f_1}{\partialx_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\
 \frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n }\\
 \vdots & \vdots & \ddots & \vdots \\
 \frac{\partial f_m}{\partial x_1} & \frac{\partial f_m}{\partial f_m}{\partial x_2} & \cdots &\frac{\partial f_m}{\partial x_n}
