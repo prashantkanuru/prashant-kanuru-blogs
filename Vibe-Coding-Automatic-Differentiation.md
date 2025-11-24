@@ -1,7 +1,39 @@
-## Vibe Coding Automatic Differentiation
+# Earlier Note:
+
 **I am going to try and cover how I vibe coded Automatic Differentiation and improved it iteratively, post that try and create an LLM-OS based on
-my understanding of it and extend it to Agent Computer Interface, again through vivbe coding. Extend this using Agentic Interface to extend it to 
-some major AI libraries in python so one can extend them effortlessly**
+my understanding of it and extend it to Agent Computer Interface, again through vibe coding. Extend this using Agentic Interface to extend it to some major AI libraries in python so one can extend them effortlessly**
+
+
+## Vibe Coding Automatic Differentiation
+This blog is an effort to understand Autograd aka computational implementation of back-propagation to implement gradient descent on parameters, the learning algorithm - gradient descent, the descent is implemented using back-propagation and computationally in frameworks like PyTorch and JAX it is implemented using Automatic Differentiation. Automatic Differentiation in turn depends upon usage of Jacobian Matrix and Computational graph.
+
+## Jacobian:
+___
+
+The Jacobian matrix, $J_f$, is essentially the generalization of the derivative for a function that takes multiple inputs and produces multiple outputs 
+
+**Definition**
+For a vector valued function $f:\mathbb{R}^n \to \mathbb{R}^m$, which maps $n$ input variables $\mathbf{x} = [x_1, \dots, x_n]^T$ to $m$ output variables $\mathbf{f} = [f_1, \dots, f_m]^T$, the Jacobian matrix $J_f$ is an $m \times n$ matrix where the element in the $i$-th row and $j$-th column is the partial derivative of the $i$-th output with respect to the $j$-th input:
+$$J_f = \frac{\partial\mathbf{f}}{\partial \mathbf{x}} = \begin{bmatrix}\frac{\partialf_1}{\partialx_1} & \frac{\partial f_1}{\partial f_1}{\partialx_2} & \cdots & \frac{\partial f_1}{\partial x_n}\\
+\frac{\partial f_2}{\partial x_1} & \frac{\partial f_2}{\partial x_2} & \cdots & \frac{\partial f_2}{\partial x_n }\\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1} & \frac{\partial f_m}{\partial f_m}{\partial x_2} & \cdots &\frac{\partial f_m}{\partial x_n}
+\end{bmatrix}$$
+
+### Vector Jacobian Product (VJP) - Reverse Mode (BackPropagation)
+THe VJP Computes the product $\mathbf{x}^T = \mathbf{w}^T \cdot J_f$ 
+
+**Interpretation:** The Jacobian describes the local linear approximation of the function. it tells you how much each output component changes with respect to a small change in each input component.
+
+____
+
+### Jacobian and Automatic Differentiation
+
+|**Mode |**Operation** |**Product Computed** |**Cost** |**When it is efficient** |
+|------ |-------------- |-------------------  |------- |------------------------ |
+|**Forward Mode (JVP)** |Jacobian-vector Product |$J_f\cdot \mathbf{v}$ |$O(n \cdot C)$ |When $n \ll m$ (**Many outputs**, few inputs). |
+|**Reverse Mode** |Vector-Jacobian Product |$\mathbf{v}^T \cdot J_f$ |$O(m \cdot C)$|When $m \ll n$ (**Few outputs, many inputs). | 
+
 
     Chat Question: What is Automatic Differentiation?
     Answer: Automatic Differentiation (AD) is a computational technique used to evaluate derivatives of functions efficiently and accurately.
