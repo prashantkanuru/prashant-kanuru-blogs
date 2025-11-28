@@ -1,43 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ page.title | default: site.title }}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title | default: "Prashant Kanuru Blogs" }}</title>
   <meta name="description" content="{{ page.excerpt | default: site.description }}">
 
+  <!-- site CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+
+  <!-- MathJax configuration + loader (v3) -->
   <script>
     window.MathJax = {
       tex: {
-        inlineMath: [['\\(','\\)']],
-        displayMath: [['$$','$$']]
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        tags: 'ams'
+      },
+      options: {
+        skipHtmlTags: ['script','noscript','style','textarea','pre']
       }
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <main>
-    {{ content }}
-  </main>
-</body>
-</html>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title | default: "My Site" }}</title>
-
-  <!-- site CSS -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-
-  <!-- MathJax include -->
-  {% include mathjax.html %}
-</head>
-<body>
   <header>
-    <p class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title | default: "My Site" }}</a></p>
+    <p class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title | default: "Prashant Kanuru Blogs" }}</a></p>
     {% if page.title %}
       <h1 class="page-title">{{ page.title }}</h1>
     {% endif %}
