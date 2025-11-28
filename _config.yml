@@ -1,0 +1,13 @@
+title: "Prashant Kanuru Blogs"
+description: "My machine learning notes and blogs"
+baseurl: ""        # leave empty unless you serve from a subpath
+url: "https://prashantkanuru.github.io/prashant-kanuru-blogs"
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  parse_block_html: true
+  math_engine: mathjax
+
+theme: null
+plugins: []
