@@ -28,7 +28,7 @@ For a dataset with $N$ points $(x_i, y_i)$, where $y_i \in \{-1,1\}$ is the clas
 
 $$y_{i}(w \cdot x_{i} + b) \geq 1, \text{for} i = 1,...,N$$
 
-The distance of a point to the hyperplane is $\frac{|\mathbf{w} \cdot \mathbf{x}_i + b|}{||\mathbf{w}||}$. The geometric margin $\gamma$ is this distance for the support vectors, and it can be shown that maximizing $\gamma$ is this distance for the support vectors, and it can be shown that maximizing $\gamma$ is equivalent to minimizing $||\mathbf{w}||^2$:
+The distance of a point to the hyperplane is \( \frac{ \lvert \mathbf{w} \cdot \mathbf{x}_i + b \rvert }{ \lVert \mathbf{w} \rVert } \). The geometric margin \(\gamma\) is this distance for the support vectors, and it can be shown that maximizing \(\gamma\) is equivalent to minimizing \(\lVert \mathbf{w} \rVert^2\):
 
 Primal Form:
 
