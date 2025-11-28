@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Support Vector Machines"
+permalink: /support-vector-machines/
 ---
 
 I have always been interested in doing a deep dive by the fact that they use kernels to turn linearly unseparable feature space by virtue of a kernel formed by switching into a higher dimension and always felt like exploring how these can be used to understand the ability of **Universal Approximation Algorithm**.
