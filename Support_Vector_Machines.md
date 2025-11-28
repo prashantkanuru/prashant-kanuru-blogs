@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Support Vector Machines"
+---
+
 I have always been interested in doing a deep dive by the fact that they use kernels to turn linearly unseparable feature space by virtue of a kernel formed by switching into a higher dimension and always felt like exploring how these can be used to understand the ability of **Universal Approximation Algorithm**.
 
 I intend to share my journey as a series of blogs starting with an overview and then movin onto the weeds of the mathematical formulations and possibly gaining some insight into one of the many perspectives of Deep Neural Networks can be understood.
