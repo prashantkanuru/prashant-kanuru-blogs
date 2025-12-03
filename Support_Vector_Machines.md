@@ -52,7 +52,7 @@ I got into thinking (not sure, if this is the case for others), as in why the co
 The reason for the constraint being subtracted from the objective function is due to the method of **Lagrange Multipliers**, which converts a constrained optimization problem into an unconstrained one.
 - The **Original Problem (Primal)**: The original problem is:
 
-$$\min_{\mathbf{w}, b} \quad \frac{1}{2}||\mathbfw{w}||^2$$
+$$\min_{\mathbf{w}, b} \quad \frac{1}{2}||\mathbf{w}||^2$$
 
 $$\text{subject to} \quad g_i(\mathbf{w},b) = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i +b) \leq 0 \quad (\text{Constraint})$$
 
@@ -111,6 +111,33 @@ Completing the substitution of  $\mathbf{w}$ and $b$ into the objective function
 
 $$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_i \alpha_j y_i y_j (\mathbf{x}_i \cdot \mathbf{x}_j)$$
 $$\text{subject to} \quad \sum_i{i=1}^N \alpha_i y_i = 0 \quad \text{and} \quad \alpha_i \geq 0, \quad \text{for} i=1, \ldots, N$$
+
+___
+
+### 5. Kernel Trick in SVM
+
+___
+
+As was evident in the Dual formulation:
+$$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_i \alpha_j y_i y_j (\mathbf{x}_i \cdot \mathbf{x}_j)$$
+
+it depends only on the dot product of input features $\mathbf{x}_i \cdot \mathbf{x}_j$. The kernel trick is a method that allows SVM to efficiently operate in a high dimensional (or infinite-dimensional) feature space without explicitly calculating the coordinates in that space (I will go through deeper on this in later chapters). So, the mapping into higher dimension (to handle linear non-separability in input feature space) is done by replacing the simple dot product $\mathbf{x}_i \cdot \mathbf{x}_j$. This function implicitly computes the dot product in a higher-dimensional space $\Phi(\mathbf{x})$:
+$$K(\mathbf{x}_i,\mathbf{x}_j) = \Phi(\mathbf{x}_i) \cdot \Phi(\mathbf{x}_j)$$
+
+**Kernel Functions**:
+By replacing the dot product in the Dual objective, the Dual Problem becomes:
+$$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_j y_i y_j K(\mathbf{x}_i, mathbf{x}_j)$$
+
+Examples of Kernel Functions are:
+1. Linear Kernel (The original dot product):
+$$K(\mathbf{x}_i, \mathbf{x_j}) = \mathbf{x}_i \cdot \mathbf{x}_j$$
+
+2. Polynomial Kernel:
+$$K(\mathbf{x}_i,mathbf{x}_j) = (\gamma \mathbf{x}_i \cdot \mathbf{x}_j + r)^d$$
+
+3. Radial Basis Function (RBF) or Gaussian Kernel:
+$$K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left(-\gamma ||\mathbf{x}_i - \mathbf{x}_j||^2) \right$$,
+where $\gamma > 0$ is a hyperparameter.
 
 ___
 
