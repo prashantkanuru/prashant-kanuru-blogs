@@ -100,6 +100,7 @@ Solving for the minimum of the Lagrangian function with respect to the primal va
 **Derivatives and Constraints (KKT Conditions)**:
 We set the partial derivatives of $\mathcal{L}$ to zero;
 Derivative w.r.t. $\mathbf{w}$:
+
 $$ \frac{\partial \mathcal{L}{\partial \mathbf{w}}} = 0 \quad \implies \quad \mathbf{w} = \sum_{i=1}^N \alpha_i y_i\mathbf{x}_i$$
 
 Derivative w.r.t. $b$:
