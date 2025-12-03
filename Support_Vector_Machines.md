@@ -136,7 +136,7 @@ $$K(\mathbf{x}_i, \mathbf{x_j}) = \mathbf{x}_i \cdot \mathbf{x}_j$$
 $$K(\mathbf{x}_i,mathbf{x}_j) = (\gamma \mathbf{x}_i \cdot \mathbf{x}_j + r)^d$$
 
 3. Radial Basis Function (RBF) or Gaussian Kernel:
-$$K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left(-\gamma ||\mathbf{x}_i - \mathbf{x}_j||^2) \right$$,
+$$K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left(-\gamma ||\mathbf{x}_i - \mathbf{x}_j||^2 \right)$$,
 where $\gamma > 0$ is a hyperparameter.
 
 ___
