@@ -44,6 +44,31 @@ Lagrangian Function $\mathcal{L}$:
 $$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_{i=1}^{N} \alpha_i\left[y_i(\mathbf{w} \cdot \mathbf{x}_i +b) -1\right]$$
 $$\text{where} \alpha_i\geq 0$$
 
+#### Side Note - can be skipped
+
+___
+
+I got into thinking (not sure, if this is the case for others), as in why the constraint is subtracted from the main objective and how will this help minimize the value of $\mathbf{w}$.
+The reason for the constraint being subtracted from the objective function is due to the method of **Lagrange Multipliers**, which converts a constrained optimization problem into an unconstrained one.
+- The **Original Problem (Primal)**: The original problem is:
+
+$$\min_{\mathbf{w}, b} \quad \frac{}
+
+
+### 4. Dual Problem
+Solving for the minimum of the Lagrangian function with respect to the primal variables ($\mathbf{w}$ and $b$), leads to the derivation of the Dual Problem. The Dual problem is crucially expresses the entire problem in terms of dot products $\mathbf{x}_i \cdot \mathbf{x}_j$, which enables the use of the Kernel Trick as dot-product instead of adding additional dimensions and this will be explained in detail in the future chapters.
+
+**Derivatives and Constraints (KKT Conditions)**:
+We set the partial derivatives of $\mathcal{L}$ to zero;
+Derivative w.r.t. $\mathbf{w}$:
+$$ \frac{\partial \mathcal{L}{\partial \mathbf{w}}} = 0 \quad \implies \quad \mathbf{w} = \sum_{i=1}^N \alpha_i y_i\mathbf{x}_i$$
+
+Derivative w.r.t. $b$:
+$$\frac{\partial\mathcal{L}}{\partial b} = 0 \quad\implies \quad \sum_{i=1}^{N} \alpha_i y_i = 0$$
+
+**Dual Objective Function**
+The Dual objective is the next step as it is an expression obtained by susbtituting the expression for $\mathbf{w}$ and the constraint on $\sum \alpha_i y_i$ back into $\mathcal{L}$. As stated above the aim is to maximize the value of $\mathbf{w}$ so that the
+
 
 
 
