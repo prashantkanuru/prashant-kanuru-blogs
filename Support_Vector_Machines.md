@@ -52,10 +52,49 @@ I got into thinking (not sure, if this is the case for others), as in why the co
 The reason for the constraint being subtracted from the objective function is due to the method of **Lagrange Multipliers**, which converts a constrained optimization problem into an unconstrained one.
 - The **Original Problem (Primal)**: The original problem is:
 
-$$\min_{\mathbf{w}, b} \quad \frac{}
+$$\min_{\mathbf{w}, b} \quad \frac{1}{2}||\mathbfw{w}||^2$$
 
+$$\text{subject to} \quad g_i(\mathbf{w},b) = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i +b) \leq 0 \quad (\text{Constraint})$$
+
+We want the functional margin term $y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$ to be \geq 1$, so the constraint we want to enforce is $1-y_i(\mathbf{w} \cdot \mathbf{x}_i + b) \leq 0$.
+
+- The Lagrangian Function $\mathcal{L}$: The Lagrangian function is constructed as:
+
+$$\mathcal{L}(\text{variables}) = \text{Objective Function} + \sum(\text{Lagrange Multiplier} \times \text{Constraint})$$
+
+For an inequality constraint $g_i(\mathbf{w}, b) \leq 0$, the standard formulation for the Lagrangian is:
+$$\mathcal{L}(\mathbf{w},b, \boldsymbol{\alpha}) =  \frac{1}{2} ||\mathbf{w}||^2 + \sum_{i=1}^N \alpha_i \cdot g_i(\mathbf{w},b) = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$$
+
+Substituting $g_i(\mathbf{w},b)  = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$:
+
+$$\mathcal{L}(\mathbf{w},b, \boldsymbol{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 + \sum_{i=1}^N \alpha_i \left[1-y_i(\mathbf{w} \cdot \mathbf{x}_i + b)\right]$$
+
+To match the common SVM formulation (which often groups the terms differently):
+
+$$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_{i=1}^N \alpha_i\left[y_i(\mathbf{w} \cdot \mathbf{x}_i + b) -1 \right]$$
+
+The constraint term is subtracted because the definition of $g_i$ and the sign convention used in the standard SVM formulation lead to a negative sign overall to simplify the subsequent steps (the $\min \max$ problem).
+
+**How this helps Minimize $||\mathbf{w}||^2$**
+The Lagrangian does not solve the minimization problem directly; it transforms the original problem ($\min \text{objective subject to constraints}$) into an unconstrained minimax problem:
+
+$$\min_{\mathbf{w},b}\left[\max_{\boldsymbol{\alpha} \geq 0} \mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha})\right]$$
+This work because the term $\sum \alpha_i[\dots]$ acts as a penalty that is only deactivated when the constraints are satisfied.
+
+**The Mechanism of the Penalty Term:**
+The inner maximization, $\max_{\boldsymbol{\alpha} \geq 0} \mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha})$, forces the constraints to be satisfied:
+
+Constraint Violated: If a data point violates the constraint, $y_i(\mathbf{w} \cdot \mathbf{x}_i +b) -1$ becomes negative. Since $\alpha_i \geq 0$, the entire penalty term $-\alpha_i[\dots]$ becomes positive and grows very large as we maximize $\alpha_i$. This drives $\mathcal{L}$ towards infinity, which means the inner $\max$ step rejects any vector $\mathbf{w}$ that violates the constraint.
+
+Constraint Satisfied: If a data point satisfies the constraint, $y_i(\mathbf{w} \cdot \mathbf{x}_i + b) -1$ is positive or zero. To maximize $\mathcal{L}$, we want to maximize the negative term $\sum \alpha_i \cdot (\text{positive})$. The only way to maximize a function by adding a growing negative term is to set the multiplier $\alpha_i$ to 0. If $\alpha_i = 0$, the penalty term vanishes, and $\mathcal{L}$ reduces to the original objective: $\mathcal{L} = \frac{1}{2} \lvert \mathbf{w} \rvert^2$.
+
+Conclusion: The $\max$ step ensures that only $\mathbf{w}$ and $b$ that satisfy all constraints are allowed to survive and participate in the final minimization step. The outer $\min$ then finds the minimum of $\frac{1}{2} \lvert \mathbf{w} \rvert^2$ among these feasible vectors. This entire process allows us to minimize $\frac{1}{2} \lvert \mathbf{w} \rvert^2$ while respecting the margin requirements.
+
+___
 
 ### 4. Dual Problem
+___
+
 Solving for the minimum of the Lagrangian function with respect to the primal variables ($\mathbf{w}$ and $b$), leads to the derivation of the Dual Problem. The Dual problem is crucially expresses the entire problem in terms of dot products $\mathbf{x}_i \cdot \mathbf{x}_j$, which enables the use of the Kernel Trick as dot-product instead of adding additional dimensions and this will be explained in detail in the future chapters.
 
 **Derivatives and Constraints (KKT Conditions)**:
@@ -67,9 +106,13 @@ Derivative w.r.t. $b$:
 $$\frac{\partial\mathcal{L}}{\partial b} = 0 \quad\implies \quad \sum_{i=1}^{N} \alpha_i y_i = 0$$
 
 **Dual Objective Function**
-The Dual objective is the next step as it is an expression obtained by susbtituting the expression for $\mathbf{w}$ and the constraint on $\sum \alpha_i y_i$ back into $\mathcal{L}$. As stated above the aim is to maximize the value of $\mathbf{w}$ so that the
+The Dual objective is the next step as it is an expression obtained by susbtituting the expression for $\mathbf{w}$ and the constraint on $\sum \alpha_i y_i$ back into $\mathcal{L}$. As stated above the aim is to maximize the value of $\mathbf{w}$ so that the objective function $\frac{1}{2} \quad \lvert \mathbf{w} \rvert^2$. 
+Completing the substitution of  $\mathbf{w}$ and $b$ into the objective function, would give.
 
+$$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_i \alpha_j y_i y_j (\mathbf{x}_i \cdot \mathbf{x}_j)$$
+$$\text{subject to} \quad \sum_i{i=1}^N \alpha_i y_i = 0 \quad \text{and} \quad \alpha_i \geq 0, \quad \text{for} i=1, \ldots, N$$
 
+___
 
 
 
