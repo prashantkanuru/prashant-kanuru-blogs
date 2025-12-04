@@ -4,9 +4,9 @@ title: "Support Vector Machines"
 permalink: /support-vector-machines/
 ---
 
-I have always been interested in doing a deep dive by the fact that they use kernels to turn linearly unseparable feature space by virtue of a kernel formed by switching into a higher dimension and always felt like exploring how these can be used to understand the ability of **Universal Approximation Algorithm**.
+I have always been interested in doing a deep dive on **Support Vector Machines** mainly driven by the fact that they use kernels to turn linearly unseparable feature space by using a kernel formed by switching into a higher dimension and the usage of **Kernel** also enthused me to exploring how these can be used to understand the ability of **Universal Approximation Algorithm**, the algorithm that states that (in simple terms), one can approximate any **Arbitrary Continuous Function** by using a neural network, a single layer of neurons, if there is no limit on the number of neurons.
 
-I intend to share my journey as a series of blogs starting with an overview and then movin onto the weeds of the mathematical formulations and possibly gaining some insight into one of the many perspectives of Deep Neural Networks can be understood.
+I intend to share my journey as a series of blogs starting with an overview and then moving onto the weeds of the mathematical formulations and possibly gaining some insight into one of the many perspectives on Deep Neural Networks to understand one or more of its building blocks.
 
 ## Chapter 1: The overall Perspective
 ___
@@ -142,6 +142,11 @@ where $\gamma > 0$ is a hyperparameter.
 
 ___
 
+### 6. Karush-Kuhn-Tucker (KKT) Conditions
+
+___
+
+The KKT conditions are the neccessary and sufficient conditions (more detailed explanation on KKT will be followed upon in the later chapters)
 
 
 ### Next Chapter: Chapter 2:
