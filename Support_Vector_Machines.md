@@ -40,11 +40,11 @@ $$\text{subject to}\quad y_i(\mathbf{w} \cdot \mathbf{x}_i + b) - 1 \geq 0, \qua
 
 ### 3. Why Lagrangian Multipliers and Why Use Them in SVM?
 
-The primary optimization problem (minimizing $||\mathbf{w}||^2$ subject to inequality constraints) is a constrained convex optimization problem. The method of Lagrange Multipliers is used to solve such problems.
+The primary optimization problem (minimizing $\lVert \mathbf{w} \rVert^2$ subject to inequality constraints) is a constrained convex optimization problem. The method of Lagrange Multipliers is used to solve such problems.
 By introducing non-negative Lagrange multipliers $\alpha_i$ (one for each constraint), a constrained primal problem is turned into an unconstrained **Lagrangian Function** $\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha})$. This allows taking partial derivatives with respect to the variables and setting them to zero (aka stationarities or the maximas in this case).
 
 Lagrangian Function $\mathcal{L}$:
-$$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_{i=1}^{N} \alpha_i\left[y_i(\mathbf{w} \cdot \mathbf{x}_i +b) -1\right]$$
+$$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha}) = \frac{1}{2} \lVert \mathbf{w} \rVert^2 - \sum_{i=1}^{N} \alpha_i\left[y_i(\mathbf{w} \cdot \mathbf{x}_i +b) -1\right]$$
 $$\text{where} \alpha_i\geq 0$$
 
 #### Side Note - can be skipped
@@ -56,7 +56,7 @@ The reason for the constraint being subtracted from the objective function is du
 
 - The **Original Problem (Primal)**: The original problem is:
 
-$$\min_{\mathbf{w}, b} \quad \frac{1}{2}||\mathbf{w}||^2$$
+$$\min_{\mathbf{w}, b} \quad \frac{1}{2}\lVert \mathbf{w} \rVert^2$$
 
 $$\text{subject to} \quad g_i(\mathbf{w},b) = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i +b) \leq 0 \quad (\text{Constraint})$$
 
@@ -67,19 +67,19 @@ We want the functional margin term $y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$ to b
 $$\mathcal{L}(\text{variables}) = \text{Objective Function} + \sum(\text{Lagrange Multiplier} \times \text{Constraint})$$
 
 For an inequality constraint $g_i(\mathbf{w}, b) \leq 0$, the standard formulation for the Lagrangian is:
-$$\mathcal{L}(\mathbf{w},b, \boldsymbol{\alpha}) =  \frac{1}{2} ||\mathbf{w}||^2 + \sum_{i=1}^N \alpha_i \cdot g_i(\mathbf{w},b) = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$$
+$$\mathcal{L}(\mathbf{w},b, \boldsymbol{\alpha}) =  \frac{1}{2} \lVert \mathbf{w} \rVert^2 + \sum_{i=1}^N \alpha_i \cdot g_i(\mathbf{w},b) = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$$
 
 Substituting $g_i(\mathbf{w},b)  = 1 - y_i(\mathbf{w} \cdot \mathbf{x}_i + b)$:
 
-$$\mathcal{L}(\mathbf{w},b, \boldsymbol{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 + \sum_{i=1}^N \alpha_i \left[1-y_i(\mathbf{w} \cdot \mathbf{x}_i + b)\right]$$
+$$\mathcal{L}(\mathbf{w},b, \boldsymbol{\alpha}) = \frac{1}{2} \lVert \mathbf{w} \rVert^2 + \sum_{i=1}^N \alpha_i \left[1-y_i(\mathbf{w} \cdot \mathbf{x}_i + b)\right]$$
 
 To match the common SVM formulation (which often groups the terms differently):
 
-$$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha}) = \frac{1}{2} ||\mathbf{w}||^2 - \sum_{i=1}^N \alpha_i\left[y_i(\mathbf{w} \cdot \mathbf{x}_i + b) -1 \right]$$
+$$\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha}) = \frac{1}{2} \lVert \mathbf{w} \rVert^2 - \sum_{i=1}^N \alpha_i\left[y_i(\mathbf{w} \cdot \mathbf{x}_i + b) -1 \right]$$
 
 The constraint term is subtracted because the definition of $g_i$ and the sign convention used in the standard SVM formulation lead to a negative sign overall to simplify the subsequent steps (the $\min \max$ problem).
 
-**How this helps Minimize $||\mathbf{w}||^2$**
+**How this helps Minimize $\lVert \mathbf{w} \rVert^2$**
 The Lagrangian does not solve the minimization problem directly; it transforms the original problem ($\min \text{objective subject to constraints}$) into an unconstrained minimax problem:
 
 $$\min_{\mathbf{w},b}\left[\max_{\boldsymbol{\alpha} \geq 0} \mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha})\right]$$
@@ -116,7 +116,7 @@ The Dual objective is the next step as it is an expression obtained by susbtitut
 Completing the substitution of  $\mathbf{w}$ and $b$ into the objective function, would give.
 
 $$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_i \alpha_j y_i y_j (\mathbf{x}_i \cdot \mathbf{x}_j)$$
-$$\text{subject to} \quad \sum_i{i=1}^N \alpha_i y_i = 0 \quad \text{and} \quad \alpha_i \geq 0, \quad \text{for} i=1, \ldots, N$$
+$$\text{subject to} \quad \sum_{i=1}^N \alpha_i y_i = 0 \quad \text{and} \quad \alpha_i \geq 0, \quad \text{for} i=1, \ldots, N$$
 
 ___
 
@@ -132,7 +132,7 @@ $$K(\mathbf{x}_i,\mathbf{x}_j) = \Phi(\mathbf{x}_i) \cdot \Phi(\mathbf{x}_j)$$
 
 **Kernel Functions**:
 By replacing the dot product in the Dual objective, the Dual Problem becomes:
-$$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_j y_i y_j K(\mathbf{x}_i, mathbf{x}_j)$$
+$$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_j y_i y_j K(\mathbf{x}_i, \mathbf{x}_j)$$
 
 Examples of Kernel Functions are:
 
@@ -143,7 +143,7 @@ $$K(\mathbf{x}_i, \mathbf{x_j}) = \mathbf{x}_i \cdot \mathbf{x}_j$$
 $$K(\mathbf{x}_i,mathbf{x}_j) = (\gamma \mathbf{x}_i \cdot \mathbf{x}_j + r)^d$$
 
 3. Radial Basis Function (RBF) or Gaussian Kernel:
-$$K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left(-\gamma ||\mathbf{x}_i - \mathbf{x}_j||^2 \right)$$,
+$$K(\mathbf{x}_i, \mathbf{x}_j) = \exp \left(-\gamma \lVert \mathbf{x}_i - \mathbf{x}_j \rVert^2 \right)$$,
 where $\gamma > 0$ is a hyperparameter.
 
 ___
@@ -152,7 +152,7 @@ ___
 
 ___
 
-The KKT conditions are the neccessary and sufficient conditions (more detailed explanation on KKT will be followed upon in the later chapters) for the optimal solution $(\mathbfw{w}^*, b^*, \boldsymbol{\alpha}^*)$ of the convex optimization problem (both Primal and Dual). For hard-margin SVM, the KKT complementary condition is:
+The KKT conditions are the neccessary and sufficient conditions (more detailed explanation on KKT will be followed upon in the later chapters) for the optimal solution $(\mathbf{w}^*, b^*, \boldsymbol{\alpha}^*)$ of the convex optimization problem (both Primal and Dual). For hard-margin SVM, the KKT complementary condition is:
 
 $$\alpha_i^* \left[y_i(\mathbf{w}^* \cdot \mathbf{x}_i+b^*)-1\right]=0, \quad \text{for} i = 1, \ldots, N$$
 
@@ -164,6 +164,7 @@ This condition tells us that for any data point $x_i$:
 ___
 
 ### 7. What is Soft Margin?
+
 ___
 
 The **Hard Margin SVM** requires the data to be perfectly linearly separarable, which is rarely the case in real-world data. The **Soft MargM** addresses this by allowing some mis-classification or margin violations, achieving a trade-off between maximizing the margin and minimizing the classification error.
@@ -172,7 +173,7 @@ This is achieved by introducing slack variables $\xi_i$ (xi) for each data point
 
 The objective function now includes a penalty term $C \sum \xi_i$:
 
-$$\min_{\mathbf{w},b,\boldsymbol{\xi}} \quad \frac{1}{2}||\mathbf{w}||^2 + C \sum_{i=1}^{N} \xi_i$$
+$$\min_{\mathbf{w},b,\boldsymbol{\xi}} \quad \frac{1}{2}\lVert \mathbf{w} \rVert^2 + C \sum_{i=1}^{N} \xi_i$$
 
 $$\text{subject to} \quad y_i(\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1 -\xi_i, \quad \text{for} i=1, \ldots, N$$
 
@@ -182,6 +183,7 @@ $C$ is the regularization parameter (or Box Constraint) which controls the trade
 ___
 
 ### 8. Famous Examples Where SVM is Used?
+
 ___
 
 SVMs are highly effective in scenarios where the data is complex or the feature space is high-dimensional:
@@ -202,7 +204,7 @@ SVMs are highly effective in scenarios where the data is complex or the feature 
   - Example: A 64x64 pixel patch results in a 4,096-dimensional input vector.
   **Why SVM Fits**:
   - Global Optimization: Unlike early neural networks, SVMs find the global maximum margin, which is critical for distinguishing subtle differences (e.g., "Is this a face or a random texture")
-  - Small Sample Efficiency: In specific recognition tasks where training sets are small SVMs can perform exceptionally well.   
+  - Small Sample Efficiency: In specific recognition tasks where training sets are small SVMs can perform exceptionally well.
 - **Bioinformatics**: Used for protein classification, cancer diagnosis, and gene function prediction.
   **Dataset Schema**:
   - Rows: Patients or biological samples
@@ -217,28 +219,29 @@ SVMs are highly effective in scenarios where the data is complex or the feature 
   - Columns (Features): 8 bit grayscale values for each pixel.
   - Labels: Discrete classes (0-9, A-Z)
 
-  #### **Why SVM Fits**:
+  #### **Why SVM Fits**
   
   - **Multi-Class Versatility**: SVMs though nativley binary can handle multi-class classification by using strategies like One-vs-Rest (OvR) or One-vs-One (OvO). These allow it to handle 10 digits or 26+ letters of the alphabet.
   - **Noise Robustness**: Handwriting is noisy and the "Soft Margin" approach in SVM allows ignoring the outliers to create a generalizable decision boundary for the majority of the data
 
-
-
 ## Next Chapter: Chapter 2
+
 ___
 
-- Why is the distance between Hard Margins 2, i.e. $\frac{2}{||\mathbf{w}||}$
+- Why is the distance between Hard Margins 2, i.e. $\frac{2}{\lVert \mathbf{w} \rVert}$
 - A lagrangian is basically aligning the gradient of the constraint with that of the object function and why the lagrangian coefficients for non-negative constraints have to be $\geq 0$
 
-## Appendix:
+## Appendix
 
 ### Note on One-vs-One (OVO)
+
 ___
 
 Support Vector Machines (SVMs) are ntaurally **binary classifiers**, meaning they are designed to distinguish between only two classes ( boolean).
 To handle **Multi-Class Classification**, One-vs-One (OVO) strategy.
 
 #### How OvO Works
+
 In the OvO approach, a multi-class problem into a series of **binary pairings**. A separate classifier is trained for every possible pair of classes.
 
 **1. The Formula**
@@ -269,9 +272,11 @@ When a new unseen data point is to be classified:
 1. **Run all classifiers**: The data point is passed through all 6 classifiers
 2. **Collect Votes**: Each classifier predicts one of its two classes. For example, the "A vs. B" classifier might vote for "A".
 3. **Final Decision**: The class that receives the **highest number of votes** across all classifiers is the final prediction.
+
 ___
 
 #### OvO vs. OvR (One-vs-Rest)
+
 The other common strategy is **One-vs-Rest(OVR)**, in which one classifier is trained per class (e.g., "Apple vs. Everything else"). Here is how they compare:
 
 |Feature |One-vs-One(OvO) |One-vs-Rest(OvR) |
@@ -286,6 +291,6 @@ ___
 #### Why is OvO preferred for SVMs?
 
 SVM training complexity is more than linear relative to the number of samples.
+
 - In **OvR**, each classifier is trained on the **entire dataset**, which can be very slow if the dataset is large.
 - In **OvO**, each classifier is trained only on data from **two classes**. Since the training set for each binary sub-problem is much smaller, the individual SVMs train much faster, often offsetting the "burden" of having to train many models.
-
