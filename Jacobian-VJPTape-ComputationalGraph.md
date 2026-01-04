@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Vibe Coding: Automatic Differentiation"
+title: "Jacobian, VJP Tape and Computational Graph aka AutoGrad"
 permalink: /vibe-coding-autodiff/
 category: innovations
 ---
