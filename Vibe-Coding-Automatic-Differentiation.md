@@ -1,7 +1,11 @@
-## Vibe Coding Automatic Differentiation
-**I am going to try and cover how I vibe coded Automatic Differentiation and improved it iteratively, post that try and create an LLM-OS based on
-my understanding of it and extend it to Agent Computer Interface, again through vivbe coding. Extend this using Agentic Interface to extend it to 
-some major AI libraries in python so one can extend them effortlessly**
+---
+layout: default
+title: "Vibe Coding: Automatic Differentiation"
+permalink: /vibe-coding-autodiff/
+category: innovations
+---
+
+**I am going to try and cover how I vibe coded Automatic Differentiation and improved it iteratively, post that try and create an LLM-OS based on my understanding of it and extend it to Agent Computer Interface, again through vibe coding. Extend this using Agentic Interface to extend it to some major AI libraries in python so one can extend them effortlessly.**
 
     Chat Question: What is Automatic Differentiation?
     Answer: Automatic Differentiation (AD) is a computational technique used to evaluate derivatives of functions efficiently and accurately.
@@ -36,7 +40,7 @@ some major AI libraries in python so one can extend them effortlessly**
       1. Breaks down the function
     
     **Computational Example in Python (Using PyTorch):**
-    ```
+    ```python
     import torch
 
     x=torch.tensor(2.0,requires_grad=True) # Track gradient
@@ -45,6 +49,8 @@ some major AI libraries in python so one can extend them effortlessly**
     y.backward()
     print(x.grad)
     ```
-  ### Observations on Vibe Coding:
-  - One should add in different types of questions that they would want like asking it to explain why finite differences suffer from numerical instability.
-  - The aim should be understand the control theory of the LLMs and possibly extend it to Gradient descent of prompts.
+
+### Observations on Vibe Coding
+
+- One should add in different types of questions that they would want like asking it to explain why finite differences suffer from numerical instability.
+- The aim should be understand the control theory of the LLMs and possibly extend it to Gradient descent of prompts.

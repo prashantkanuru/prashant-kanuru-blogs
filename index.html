@@ -3,16 +3,43 @@ layout: default
 title: "Home"
 ---
 
-<h1>Welcome to My AI Blog</h1>
-<p>This site contains my notes and deep dives into Artificial Intelligence and Machine Learning.</p>
+<section class="hero">
+  <h1>Crafting Intelligence</h1>
+  <p class="subtitle">Deep dives into Mathematical Foundations & Product Innovations in AI.</p>
+</section>
 
-<h2>Recent Posts</h2>
-<ul>
-  {% for post in site.pages %}
-    {% if post.title and post.permalink != "/" %}
-      <li>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+<div class="blog-sections">
+  <section class="blog-category">
+    <h2><span class="icon">🚀</span> Product Innovations & Agents</h2>
+    <p class="section-desc">Multi-agent systems, GenAI workflows, and the future of agentic design.</p>
+    <ul class="post-list">
+      {% for post in site.pages %}
+      {% if post.category == "innovations" %}
+      <li class="post-item">
+        <a href="{{ post.url | relative_url }}">
+          <span class="post-title">{{ post.title }}</span>
+          <span class="post-arrow">→</span>
+        </a>
       </li>
-    {% endif %}
-  {% endfor %}
-</ul>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="blog-category">
+    <h2><span class="icon">📐</span> Foundational Notes</h2>
+    <p class="section-desc">Rigorous explorations of SVMs, MLP, and core Machine Learning theory.</p>
+    <ul class="post-list">
+      {% for post in site.pages %}
+      {% if post.category == "fundamentals" %}
+      <li class="post-item">
+        <a href="{{ post.url | relative_url }}">
+          <span class="post-title">{{ post.title }}</span>
+          <span class="post-arrow">→</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+</div>

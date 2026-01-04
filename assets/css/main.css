@@ -66,6 +66,8 @@ body {
   margin-bottom: 0.5rem;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
+  background-clip: text;
+  /* Standard property */
   -webkit-text-fill-color: transparent;
   margin-top: 0;
 }
@@ -134,6 +136,102 @@ pre code {
   color: var(--text-muted);
   font-size: 0.9rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Blog Index Layout */
+.hero {
+  text-align: center;
+  padding: 4rem 0 6rem;
+}
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 4rem;
+  margin: 0;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero .subtitle {
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  margin-top: 1rem;
+}
+
+.blog-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+@media (max-width: 768px) {
+  .blog-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+.blog-category h2 {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-item {
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.post-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent);
+  transform: translateX(5px);
+}
+
+.post-item a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.post-item .post-title {
+  font-size: 1.1rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.post-arrow {
+  color: var(--accent);
+  font-weight: bold;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.post-item:hover .post-arrow {
+  opacity: 1;
 }
 
 /* List Styling */

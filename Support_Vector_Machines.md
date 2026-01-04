@@ -2,6 +2,7 @@
 layout: default
 title: "Support Vector Machines"
 permalink: /support-vector-machines/
+category: fundamentals
 ---
 
 I have always been interested in doing a deep dive on **Support Vector Machines** mainly driven by the fact that they use kernels to turn linearly unseparable feature space by using a kernel formed by switching into a higher dimension and the usage of **Kernel** also enthused me to exploring how these can be used to understand the ability of **Universal Approximation Algorithm**, the algorithm that states that (in simple terms), one can approximate any **Arbitrary Continuous Function** by using a neural network, a single layer of neurons, if there is no limit on the number of neurons.
