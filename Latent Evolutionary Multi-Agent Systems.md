@@ -23,6 +23,9 @@ ___
 
 ## 🏗️ **The Architecture: Generative Orchestration**
 
+![LE-MAS Overall Architecture Architecture]({{ '/assets/images/le_mas_architecture.png' | relative_url }})
+*The High-Level Architecture of LE-MAS: Featuring the MotherAgent, Latent Expert Spawning, and the Recursive Critique Loop.*
+
 The heartbeat of LE-MAS is the **MotherAgent**. Moving away from the role of a simple router, the MotherAgent serves as a **Hierarchical Orchestration Layer** following a recursive lifecycle: **Discover -> Spawn -> Orchestrate.**
 
 ### 1. Latent Expert Spawning (The "Architect" Phase)
