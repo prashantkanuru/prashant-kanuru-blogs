@@ -180,3 +180,76 @@ tr:last-child td {
 tr:hover td {
   background: rgba(255, 255, 255, 0.02);
 }
+
+/* Print Styles for PDF Generation */
+@media print {
+  body {
+    background: white;
+    color: black;
+    font-size: 11pt;
+  }
+
+  .glass-bg,
+  .site-header {
+    display: none;
+  }
+
+  .container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .post-title {
+    background: none;
+    -webkit-text-fill-color: black;
+    color: black;
+    font-size: 24pt;
+    margin-top: 0;
+  }
+
+  .post-divider {
+    background: black;
+    height: 2px;
+  }
+
+  h2,
+  h3 {
+    color: black;
+  }
+
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+
+  pre,
+  code {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    color: black;
+    font-size: 10pt;
+  }
+
+  .site-footer {
+    border-top: 1px solid #e5e7eb;
+    color: #4b5563;
+  }
+
+  table {
+    border: 1px solid #e5e7eb;
+    background: white;
+    color: black;
+    page-break-inside: avoid;
+  }
+
+  th {
+    background: #f3f4f6;
+    color: black;
+    border-bottom: 1px solid #d1d5db;
+  }
+
+  td {
+    border-bottom: 1px solid #e5e7eb;
+  }
+}
