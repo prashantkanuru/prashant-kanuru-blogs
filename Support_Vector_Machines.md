@@ -9,9 +9,11 @@ I have always been interested in doing a deep dive on **Support Vector Machines*
 I intend to share my journey as a series of blogs starting with an overview and then moving onto the weeds of the mathematical formulations and possibly gaining some insight into one of the many perspectives on Deep Neural Networks to understand one or more of its building blocks.
 
 ## Chapter 1: The overall Perspective
+
 ___
 
 ### 1. What is SVM?
+
 Support Vector Machine (SVM) falls under the class of supervised machine learning algorithm that can be used for both classification and regression tasks. The core idea is to find the Optimal Separating Hyperplane - a decision boundary that best separates the data points of different classes. The `**"best"**` hyperplane in this case being the one that achieves maximum margin between the nearest training data-points of any class, which are called the support vectors.
 
 ### 2. What is Margin (Hard Margin)?
@@ -37,6 +39,7 @@ $$\min_{\mathbf{w},b}\quad \frac{1}{2}||\mathbf{w}||^2$$
 $$\text{subject to}\quad y_i(\mathbf{w} \cdot \mathbf{x}_i + b) - 1 \geq 0, \quad \text{for } i = 1,\dots,N$$
 
 ### 3. Why Lagrangian Multipliers and Why Use Them in SVM?
+
 The primary optimization problem (minimizing $||\mathbf{w}||^2$ subject to inequality constraints) is a constrained convex optimization problem. The method of Lagrange Multipliers is used to solve such problems.
 By introducing non-negative Lagrange multipliers $\alpha_i$ (one for each constraint), a constrained primal problem is turned into an unconstrained **Lagrangian Function** $\mathcal{L}(\mathbf{w},b,\boldsymbol{\alpha})$. This allows taking partial derivatives with respect to the variables and setting them to zero (aka stationarities or the maximas in this case).
 
@@ -50,6 +53,7 @@ ___
 
 I got into thinking (not sure, if this is the case for others), as in why the constraint is subtracted from the main objective and how will this help minimize the value of $\mathbf{w}$.
 The reason for the constraint being subtracted from the objective function is due to the method of **Lagrange Multipliers**, which converts a constrained optimization problem into an unconstrained one.
+
 - The **Original Problem (Primal)**: The original problem is:
 
 $$\min_{\mathbf{w}, b} \quad \frac{1}{2}||\mathbf{w}||^2$$
@@ -93,6 +97,7 @@ Conclusion: The $\max$ step ensures that only $\mathbf{w}$ and $b$ that satisfy 
 ___
 
 ### 4. Dual Problem
+
 ___
 
 Solving for the minimum of the Lagrangian function with respect to the primal variables ($\mathbf{w}$ and $b$), leads to the derivation of the Dual Problem. The Dual problem is crucially expresses the entire problem in terms of dot products $\mathbf{x}_i \cdot \mathbf{x}_j$, which enables the use of the Kernel Trick as dot-product instead of adding additional dimensions and this will be explained in detail in the future chapters.
@@ -107,7 +112,7 @@ Derivative w.r.t. $b$:
 $$\frac{\partial\mathcal{L}}{\partial b} = 0 \quad\implies \quad \sum_{i=1}^{N} \alpha_i y_i = 0$$
 
 **Dual Objective Function**
-The Dual objective is the next step as it is an expression obtained by susbtituting the expression for $\mathbf{w}$ and the constraint on $\sum \alpha_i y_i$ back into $\mathcal{L}$. As stated above the aim is to maximize the value of $\mathbf{w}$ so that the objective function $\frac{1}{2} \quad \lvert \mathbf{w} \rvert^2$. 
+The Dual objective is the next step as it is an expression obtained by susbtituting the expression for $\mathbf{w}$ and the constraint on $\sum \alpha_i y_i$ back into $\mathcal{L}$. As stated above the aim is to maximize the value of $\mathbf{w}$ so that the objective function $\frac{1}{2} \quad \lvert \mathbf{w} \rvert^2$.
 Completing the substitution of  $\mathbf{w}$ and $b$ into the objective function, would give.
 
 $$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^{N} \sum_{j=1}^{N} \alpha_i \alpha_j y_i y_j (\mathbf{x}_i \cdot \mathbf{x}_j)$$
@@ -130,6 +135,7 @@ By replacing the dot product in the Dual objective, the Dual Problem becomes:
 $$\max_{\boldsymbol{\alpha}} \quad \sum_{i=1}^{N} \alpha_i -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_j y_i y_j K(\mathbf{x}_i, mathbf{x}_j)$$
 
 Examples of Kernel Functions are:
+
 1. Linear Kernel (The original dot product):
 $$K(\mathbf{x}_i, \mathbf{x_j}) = \mathbf{x}_i \cdot \mathbf{x}_j$$
 
@@ -146,9 +152,138 @@ ___
 
 ___
 
-The KKT conditions are the neccessary and sufficient conditions (more detailed explanation on KKT will be followed upon in the later chapters)
+The KKT conditions are the neccessary and sufficient conditions (more detailed explanation on KKT will be followed upon in the later chapters) for the optimal solution $(\mathbfw{w}^*, b^*, \boldsymbol{\alpha}^*)$ of the convex optimization problem (both Primal and Dual). For hard-margin SVM, the KKT complementary condition is:
+
+$$\alpha_i^* \left[y_i(\mathbf{w}^* \cdot \mathbf{x}_i+b^*)-1\right]=0, \quad \text{for} i = 1, \ldots, N$$
+
+This condition tells us that for any data point $x_i$:
+
+- If $\mathbf{x}_i$ is not a support vector (i.e., $y_i(w^*\cdot \mathbf{x}_i+b^*)> 1$, it's outside the margin), then its corresponding multiplier $\alpha_i^*$ must be zero.
+- If $\mathbf{x}_i$ is a support vector (i.e., $y_i(\mathbf{w}^* \cdot \mathbf{x}_i+b^*)=1$, it is on the margin), then its $\alpha_i^*$ must be greater than zero.
+
+___
+
+### 7. What is Soft Margin?
+___
+
+The **Hard Margin SVM** requires the data to be perfectly linearly separarable, which is rarely the case in real-world data. The **Soft MargM** addresses this by allowing some mis-classification or margin violations, achieving a trade-off between maximizing the margin and minimizing the classification error.
+
+This is achieved by introducing slack variables $\xi_i$ (xi) for each data point, which measure the degree of violation of the margin constraint.
+
+The objective function now includes a penalty term $C \sum \xi_i$:
+
+$$\min_{\mathbf{w},b,\boldsymbol{\xi}} \quad \frac{1}{2}||\mathbf{w}||^2 + C \sum_{i=1}^{N} \xi_i$$
+
+$$\text{subject to} \quad y_i(\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1 -\xi_i, \quad \text{for} i=1, \ldots, N$$
+
+$$\text{and} \quad \xi_i \geq 0$$
+
+$C$ is the regularization parameter (or Box Constraint) which controls the trade-off.
+___
+
+### 8. Famous Examples Where SVM is Used?
+___
+
+SVMs are highly effective in scenarios where the data is complex or the feature space is high-dimensional:
+
+- **Text and Hypertext Categorization**: Used for classifying documents based on their content.
+  **Dataset Schema**:
+  - Rows: Individual documents or web-pages
+  - Columns (Features): A **Sparse Matrix** of word frequencies. Each column represents a unique word in the vocabulary (often using **TF-IDF** weighting).
+  - Shape: Extremely high-dimensional (e.g., 50,000+ features/words) but very sparse (most documents only contain a small fraction of the total vocabulary).
+
+  **Why SVM Fits**:
+  - High Dimensionality: SVMs are mathematically robust against the "curse of dimensionality". Because the decision boundary is defined only by support vectors, it does not get "overwhelmed" by the tens of other word features.
+  - Linear Separability: Most text classification problems are linearly separable in high-dimensional space, making a linear SVM extremely fast and accurate.
+- **Image Classification/Recognition**: Particularly face detection and object recognition.
+  **Dataset Schema**:
+  - Rows: Inidividual images or cropped patches of images
+  - Columns (Features): Normalized pixel intensity values (grayscale/RGB) or extracted feature vectors like HOG(Histogram Oriented Gradients) or SIFT(Scale Invariant Feature Transform).
+  - Example: A 64x64 pixel patch results in a 4,096-dimensional input vector.
+  **Why SVM Fits**:
+  - Global Optimization: Unlike early neural networks, SVMs find the global maximum margin, which is critical for distinguishing subtle differences (e.g., "Is this a face or a random texture")
+  - Small Sample Efficiency: In specific recognition tasks where training sets are small SVMs can perform exceptionally well.   
+- **Bioinformatics**: Used for protein classification, cancer diagnosis, and gene function prediction.
+  **Dataset Schema**:
+  - Rows: Patients or biological samples
+  - Columns (Features): Expression levels of thousands of genes (Microarray data).
+  - The "p >> n" Problem: You might have 20,000 genes (p) but only 100 patients (n).
+  **Why SVM fits**:
+  - Regularization: SVMs have a built-in regularization parameter (C) that prevents overfitting, which is the biggest risk when you have way more features than samples.
+  - Kernel Trick: Biological relationships are rarely linear. SVM Kernels (like RBF) allow the model to capture complex, non-linear interactions between genes without needing to manually define them.
+- **Handwriting Recognition.**
+  **Dataset Schema**:
+  - Rows: Scanned images of handwritten characters (e.g., the MNIST dataset).
+  - Columns (Features): 8 bit grayscale values for each pixel.
+  - Labels: Discrete classes (0-9, A-Z)
+  **Why SVM Fits**:
+  - **Multi-Class Versatility**: SVMs though nativley binary can handle multi-class classification by using strategies like One-vs-Rest (OvR) or One-vs-One (OvO). These allow it to handle 10 digits or 26+ letters of the alphabet.
+  - **Noise Robustness**: Handwriting is noisy and the "Soft Margin" approach in SVM allows ignoring the outliers to create a generalizable decision boundary for the majority of the data
 
 
-### Next Chapter: Chapter 2:
+
+## Next Chapter: Chapter 2
+___
+
 - Why is the distance between Hard Margins 2, i.e. $\frac{2}{||\mathbf{w}||}$
 - A lagrangian is basically aligning the gradient of the constraint with that of the object function and why the lagrangian coefficients for non-negative constraints have to be $\geq 0$
+
+## Appendix:
+
+### Note on One-vs-One (OVO)
+___
+
+Support Vector Machines (SVMs) are ntaurally **binary classifiers**, meaning they are designed to distinguish between only two classes ( boolean).
+To handle **Multi-Class Classification**, One-vs-One (OVO) strategy.
+
+#### How OvO Works
+In the OvO approach, a multi-class problem into a series of **binary pairings**. A separate classifier is trained for every possible pair of classes.
+
+**1. The Formula**
+In a generalized sense, for $K$ classes, the number of individual binary classifiers needed to train is calculated using the formula:
+
+$$\binom{K}{2} = \frac{K(K-1)}{2}$$
+Example with 4 classes (A, B, C, D):
+
+Number of classifiers needed: $\frac{4(4-1)}{2} = 6$
+
+A vs B
+
+A vs C
+
+A vs D
+
+B vs C
+
+B vs D
+
+C vs D
+___
+
+#### How the Winner is Chosen (Max-Wins Voting)
+
+When a new unseen data point is to be classified:
+
+1. **Run all classifiers**: The data point is passed through all 6 classifiers
+2. **Collect Votes**: Each classifier predicts one of its two classes. For example, the "A vs. B" classifier might vote for "A".
+3. **Final Decision**: The class that receives the **highest number of votes** across all classifiers is the final prediction.
+___
+
+#### OvO vs. OvR (One-vs-Rest)
+The other common strategy is **One-vs-Rest(OVR)**, in which one classifier is trained per class (e.g., "Apple vs. Everything else"). Here is how they compare:
+
+|Feature |One-vs-One(OvO) |One-vs-Rest(OvR) |
+|--- |--- |--- |
+|Number of models |Much Higher (K(K-1)/2) |Lower(K) |
+|Training Speed |**Fast** |**Slow** |
+|Memory Usage|High (storing many models).|Low (storing few models) |
+|Preference |Preferred for SVMs and kernel-based methods |Preferred for **Logistic Regression** |
+
+___
+
+#### Why is OvO preferred for SVMs?
+
+SVM training complexity is more than linear relative to the number of samples.
+- In **OvR**, each classifier is trained on the **entire dataset**, which can be very slow if the dataset is large.
+- In **OvO**, each classifier is trained only on data from **two classes**. Since the training set for each binary sub-problem is much smaller, the individual SVMs train much faster, often offsetting the "burden" of having to train many models.
+
