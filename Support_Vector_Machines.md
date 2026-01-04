@@ -216,7 +216,9 @@ SVMs are highly effective in scenarios where the data is complex or the feature 
   - Rows: Scanned images of handwritten characters (e.g., the MNIST dataset).
   - Columns (Features): 8 bit grayscale values for each pixel.
   - Labels: Discrete classes (0-9, A-Z)
-  **Why SVM Fits**:
+
+  #### **Why SVM Fits**:
+  
   - **Multi-Class Versatility**: SVMs though nativley binary can handle multi-class classification by using strategies like One-vs-Rest (OvR) or One-vs-One (OvO). These allow it to handle 10 digits or 26+ letters of the alphabet.
   - **Noise Robustness**: Handwriting is noisy and the "Soft Margin" approach in SVM allows ignoring the outliers to create a generalizable decision boundary for the majority of the data
 
