@@ -35,4 +35,4 @@ To understand the Jacobian, it is very helpful to understand the basic differenc
 **Scalar Valued Functions: ($f: \mathbb{R}^n \to \mathbb{R}$)**
 - Definition: These functions take a vector of inputs but return a **single number aka scalar output**.
 - Example: A **Loss Function** in Deep Learning. It takes millions of weights (a vector) and returns a single "error" value (aka scalar output).
-- Derivative
+- Derivative: The derivative of a scalar function is called the **Gradient** ($\nabla f$). It is a vector that points in the direction of the steepest increase. 
