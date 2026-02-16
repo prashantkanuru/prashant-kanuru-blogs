@@ -104,4 +104,52 @@ Inputs ($n$): 1 million parameters
 Outputs ($m$): 1 million activations
 The Jacobian Size: $10^6 \times 10^6 = 1,000,000,000,000$ elements (1 Trillion!).
 Computing and storing this would require terabytes of memory for just a single layer. This is the "Curse of Dimensionality" in AD: while the Jacobian is mathematically elegant, it is computationally catastrophic. 
-This is why JVPs and VJPs exist. They allow us to compute the effect of the Jacobian (the product) without ever actually building the massive itself.
+This is why JVPs and VJPs exist. They allow us to compute the effect of the Jacobian (the product) without ever actually building the massive matrix itself.
+
+___
+
+## Why JVPs and VJPs are considered a Shortcut?
+___
+
+This question an obvious one we need to consider the computational costs, Jacobian is a full map, but in most cases, all that is needed is the knowledge of how a specific "signal" propagates through the network.
+
+___
+
+**1. The Shortcut Logic: Products over Matrices**
+In a standard computer program, you have a sequence of functions: $x \to f_1 \to f_2\to \dots \to f_k \to y$ .
+By the Chain Rule, the full Jacobian is:
+$$J = J_k \cdot J_{k-1} \dots J_1$$
+The "Expensive" Way: Multiply all these matrices together to get $J$, then multiply by a vector $v$.
+The "Shortcut" Way: Treat each local Jacobian as a linear operator. Instead of materializing the matrix $J_1$ on a vector.
+Forward Mode AD: The JVP Shortcut
+Forward mode compute $Jv$. It tracks the "tangent" (velocity) of each intermediate variable as the computation moves forward.
+
+How it works: It starts with a seed vector $v$ (usually a one-hot vector representing the input that is the target of interest). At each step $i$, it computes:
+$$v_{i} = J_i\cdot v_{i-1}$$
+The Shortcut: $J_i$ is never stored instead what is computed is the result of the product $v_{i}$.
+Complexity: The complexity (Time) is, if there are $N$ inputs, the forward pass must be run $N$ times to get the full Jacobian.
+
+___
+
+**2. Reverse Mode AD: The VJP Shortcut**
+Reverse mode computes $v^T J$, the core or heart of the learning process in deep learning as this enables/carries out the gradient of a scalar (like loss) with respect to every single parameter in one single backward pass.
+How it works: First a "Forward Pass" is carried out to compute and store the values of all intermediate variables. The learning journey or the backward (backward because it starts from the loss) starts from the output ($v = 1$ for a scalar loss):
+$$g_{i-1} = v^T_{i}\cdot J_i $$
+The Shortcut: Each step is a Vector-Jacobian Product. It is just a "Pulling back" of the gradient from the output towards the input.
+Complexity: (Time), irrespective of the number of inputs $N$, if there is 1 scalar output (which is the case as it is "a" loss -  "a" scalar), only one backward pass is needed.
+
+___
+
+**3. Why these are called "Shortcuts"**
+The Jacobian $J$ for a layer with 1,000 inputs and 1,000 outputs  (and this is a very simple one for that matter the inputs and output can get multiple "X's" of these) has 1,000,000 entries
+
+- **Memory**: A JVP or VJP only require storing the vectors (size 1,000), this is done in PyTorch as ctx, not the matrix
+- **Computation**: Modern hardware (GPUs/ASICs) are faster at performing a sequence of Vector-Matrix or Vector-Vector operations than they are at performing Matrix-Matrix multiplications of massive, often sparse, Jacobians.
+___
+
+**4. Now, how do the frameworks actual bring the shortcuts into usage**
+
+The usage of the shortcuts is what helps answer possible doubts or questions like: **If we do not even create the Jacobian, how does the computer know how to multiply by it?**
+
+
+___
