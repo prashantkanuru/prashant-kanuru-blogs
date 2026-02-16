@@ -108,7 +108,7 @@ This is why JVPs and VJPs exist. They allow us to compute the effect of the Jaco
 
 ___
 
-## Why JVPs and VJPs are considered a Shortcut?
+## 3. Why JVPs and VJPs are considered a Shortcut - The Math vs. Engineering View - Tape & Pullback Functions
 ___
 
 This question an obvious one we need to consider the computational costs, Jacobian is a full map, but in most cases, all that is needed is the knowledge of how a specific "signal" propagates through the network.
@@ -150,6 +150,52 @@ ___
 **4. Now, how do the frameworks actual bring the shortcuts into usage**
 
 The usage of the shortcuts is what helps answer possible doubts or questions like: **If we do not even create the Jacobian, how does the computer know how to multiply by it?**
+
+Put in another way, if we are not building the Jacobian matrix, how does the framework "know" how to differentiate or else the derivative or gradient function? 
+This is handled in two distinct phases during the execution of the code.
+
+**Phase 1: The Primary Computation (The "What")**
+The framework first executes the primitive operation to get the output.
+Example: $y = \sin(x)$
+The computer calculates the sine of the input and stores the result $y$. This is the standard forward pass we are all familiar with.
+
+**Phase 2: The Sensitivity Recording (The "How")**
+This is where the implementation splits depending on the `Automatic Differentiation Mode` (Forward or Reverse). The framework `"Tapes"` a specialized function to the computational node. 
+
+For Forward AD (Storing the JVP):
+
+If the framework is in "Forward Mode", it does not wait for a backward pass. It immediately computes the **Jacobian-Vector Product** alongside the primal value.
+
+- **Input**: $x$ and a "tangent" vector $v$
+- **Calculation**: $y = \sin(x)$ and $\dot{y} = \cos(x) \cdot v$.
+- **Result**: The "tangent" $\dot{y}$ is moved to the next operation immediately.
+
+For Reverse AD (Storing the VJP/Pullback):
+
+In Reverse Mode (PyTorch or JAX's `vjp`), the framework cannot compute the derivative yet because it does not have the "incoming gradient" from the loss. Instead, it stores a **Pullback Function**.
+
+- **Forward Pass**: $y = \sin(x)$
+- **The "Tape" Record**: The framework saves the input $x$ (because it is needed for the derivative) and a pointer to a specialized function `lambda grad: grad * cos(x)`.
+- **Waiting**: This function sits on the "Tape" until the backward pass begins.
+
+**Key Distinction**: In Forward AD, we compute and store **values** (tangents). In Reverse AD, we compute and store **functions** (pullbacks).
+
+___
+
+**Finally: Why Flattening is an Illusion**
+When we see the math $J^T\mathbf{v}$, we except to see a matrix, but the "Tape" just shows us that $J^T\mathbf{v}$ is just a recipe.
+- The Math View: $J$ is a matrix of partial derivatives. To get $J^T\mathbf{v}$, the matrix needs to be arranged, transposed and multiplied.
+- The Engineering View: $J^T\mathbf{v}$ is a specific **Pullback Function** for a specific operation.
+
+For a matrix multiplication $Y = WX$, the VJP for $W$ is simply $\mathbf{v}X^T$. The framework does not "flatten" the weights into a Jacobian; it just executes that specific transposed multiplication.
+
+___
+
+## 4. How the pullback functions are executed using a data structure called `Toposort`
+
+Once the `"Tape"` 
+
+
 
 
 ___
