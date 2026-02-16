@@ -4,7 +4,7 @@ title: "Jacobian, VJP Tape and Computational Graph aka AutoGrad"
 permalink: /automatic-differentiation-jacobian/
 category: fundamentals
 ---
-# Demystifying Automatic Differentiation through the lens of Jacobain: VJP Tape and Computational Graph
+# Demystifying Automatic Differentiation: The Lens of Jacobian, VJP Tape and Computational Graph
 
 ___
 
@@ -13,25 +13,27 @@ ___
 ___
 
 ### What is Automatic Differentiation?
+
 **Automatic Differentiation (AD)** is a set of techniques to evaluate the derivative of a function defined by a computer program. AD exploits the fact that every computer program defining a function (a neural network - compositional function, a physics simulation, or a simple loop), is executed as a sequence of **primitive operations** (addition, multiplication, exp, sin, etc.)
 
 **AD** adds in the aspect of simultaneous application of chain-rule to these primitive operations overcoming the limitations of symbolic math and numerical approximations, making it the de-facto choice for gradient computation in deep-learning frameworks like PyTorch and JAX.
 
 ### Bridging the "Chain Rule" and the "Jacobian"
 
-The fundamental objective of **AD** is to compute the sensitivity of a program's output to its input. Mathematically, this sensitivity is exactly what the **Jacobian** represents. 
+The fundamental objective of **AD** is to compute the sensitivity of a program's output to its input. Mathematically, this sensitivity is exactly what the **Jacobian** represents.
 
 ### Viewing AD in terms of the Jacobian
 
 Calculus in high-school or in an introductory 101 level is about a single variable but in case of Machine learning, it moves to "vector-to-vector" mappings. Combining the key ideas discussed till now, **AD can be viewed as a systematic way to compute the Jacobian by breaking down a complex program into a sequence of elementary operations**, thus every line of code in a PyTorch or JAX function represents a transformation (that is matrix operations, in a linear algebra sense, multiplying with a matrix to carry out a linear-transformation) and **AD** looks at these transformations as: "Each step having its own local jacobian (the sensitivity trapper aka multi-variable calculus, also called vector calculs) and if all these Jacobians are multiplied together, it leads to the creation of the global jacobian of the entire **program**".
 
 ### Defining the Jacobian Matrix: The "Master Map"
+
 The Jacobian ($J$) is a matrix that collects every possible first-order partial derivative of a vector-valued function. If the function $f$ maps $n$ inputs to $m$ outputs, the Jacobian is an $m \times n$ matrix:
 
 $$J = \begin{bmatrix}
 \frac{\partial y_1}{\partialx_1} & \cdots & \frac{\partial y_1}{\partial x_n}\\
 \vdots & \ddots & \vdots \\
-\frac{\partial y_m}{\partial x_1} & \cdots & \frac{\partial y_m}{\partial x_n} 
+\frac{\partial y_m}{\partial x_1} & \cdots & \frac{\partial y_m}{\partial x_n}
 \end{bmatrix}$$
 Each Row ($i$): Represents how the $i$-th output changes with respect to all inputs (this is the gradient of $y_i$).
 Each Column ($j$): Represents how all outputs change with respect to a "nudge" in the $j$-th input.
@@ -70,15 +72,15 @@ ___
 #### Scalar vs. Vector Valued Functions
 ___
 
-To understand the Jacobian, it is very helpful to understand the basic difference between scalar and vector valued functions. 
+To understand the Jacobian, it is very helpful to understand the basic difference between scalar and vector valued functions.
 
 **Scalar Valued Functions: ($f: \mathbb{R}^n \to \mathbb{R}$)**
 - Definition: These functions take a vector of inputs but return a **single number aka scalar output**.
 - Example: A **Loss Function** in Deep Learning. It takes millions of weights (a vector) and returns a single "error" value (aka scalar output).
-- Derivative: The derivative of a scalar function is called the **Gradient** ($\nabla f$). It is a vector that points in the direction of the steepest increase. 
+- Derivative: The derivative of a scalar function is called the **Gradient** ($\nabla f$). It is a vector that points in the direction of the steepest increase.
 
     **A Small Note**: Though the output of a scalar valued function is a scalar as in $\mathbb{R}$ but the input domain is still $\mathbb{R}^n$ and hence the gradient of the function will be a $\nabla f$ i.e. for a scalar function $f(x_1,x_2,\dots,x_n)$ is:
-    $$\nabla f = \left[\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},\dots,\frac{\partial f}{\partial x_n} \right]$$ 
+    $$\nabla f = \left[\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},\dots,\frac{\partial f}{\partial x_n} \right]$$
 
     Each component quantifies the change in scalar output with respect to the change in it. Combining these components gives a vector and thus the direction to move to bring about maximum change in the scalar output.
         - **Connection to Jacobian**: The Jacobian of the scalar function by definition of Jacobian is a row vector ($1 \times n$).
@@ -103,7 +105,7 @@ Let us take a standard transformation layer:
 Inputs ($n$): 1 million parameters
 Outputs ($m$): 1 million activations
 The Jacobian Size: $10^6 \times 10^6 = 1,000,000,000,000$ elements (1 Trillion!).
-Computing and storing this would require terabytes of memory for just a single layer. This is the "Curse of Dimensionality" in AD: while the Jacobian is mathematically elegant, it is computationally catastrophic. 
+Computing and storing this would require terabytes of memory for just a single layer. This is the "Curse of Dimensionality" in AD: while the Jacobian is mathematically elegant, it is computationally catastrophic.
 This is why JVPs and VJPs exist. They allow us to compute the effect of the Jacobian (the product) without ever actually building the massive matrix itself.
 
 ___
@@ -151,7 +153,7 @@ ___
 
 The usage of the shortcuts is what helps answer possible doubts or questions like: **If we do not even create the Jacobian, how does the computer know how to multiply by it?**
 
-Put in another way, if we are not building the Jacobian matrix, how does the framework "know" how to differentiate or else the derivative or gradient function? 
+Put in another way, if we are not building the Jacobian matrix, how does the framework "know" how to differentiate or else the derivative or gradient function?
 This is handled in two distinct phases during the execution of the code.
 
 **Phase 1: The Primary Computation (The "What")**
@@ -160,7 +162,7 @@ Example: $y = \sin(x)$
 The computer calculates the sine of the input and stores the result $y$. This is the standard forward pass we are all familiar with.
 
 **Phase 2: The Sensitivity Recording (The "How")**
-This is where the implementation splits depending on the `Automatic Differentiation Mode` (Forward or Reverse). The framework `"Tapes"` a specialized function to the computational node. 
+This is where the implementation splits depending on the `Automatic Differentiation Mode` (Forward or Reverse). The framework `"Tapes"` a specialized function to the computational node.
 
 For Forward AD (Storing the JVP):
 
@@ -193,9 +195,35 @@ ___
 
 ## 4. How the pullback functions are executed using a data structure called `Toposort`
 
-Once the `"Tape"` 
+Once the `"Tape"` is full of these pullback functions, the framework needs to execute them. It cannot go in any random order; it must follow the **Reverse Topological Order**
+- The **Loss Node**: Gradient of 1.0 is the starting point.
+- **Topological Traversal**: The framework looks at the last operation on the tape, grabs its stored `pullback_fn`, passes in the current gradient, and gets a new gradient.
+- **Accumulation**: If a variable was used in multiple places (like a weight used in two different layers), the gradients are **summed** at that node.
 
+### A Double-Click on the process in PyTorch: `ctx` and the Dynamic Graph
 
+In PyTorch, every operation that involves a tensor with `requires_grad = True` creates a **Node** in the computational graph. This node is an instance of `torch.autograd.Function`.
 
+- **The `ctx` (The Context Object)**: The `ctx` is the local memory for a specific operation. It acts as the "bridge" between the forward pass and the backward pass.
+    - **During Forward**: You use `ctx.save_for_backward(inputs, outputs)` to store **Primal Values**. These are the values (like the $x$ in $e^x$) that the derivative formula needs later (actually the input tensors).
+    - **The Storage**: This is what "populates" the tape. Without saving these primals, the VJP would not know where on the curve to calculate the slope.
+- **The Pointers: `forward` and `backward`**: Each node in the graph holds more than just data; it holds **logic**:
+    - The Forward Function: The code that was just executed (e.g. `torch.exp`)
+    - The Backward Function (The VJP): A pointer to the specific derivative logic (e.g., `grad_output * result`)
 
+- **The "Tape" is a Chain of `next_functions`**: The "Tape" in PyTorch is actually represented by the `grad_fn` attribute on the tensors.
+
+    - If say $y = a + b$, the tensor $y$ has a `grad_fn` pointing to an `AddBackward` node.
+    - That `AddBackward` node has a property called `next_functions`, which points to the `grad_fn` of $a$ and $b$.
+
+**This chain of pointers is the Tape**. When you call `.backward()`, PyTorch simply follows these pointers backward through the graph.
+
+## 5. Conclusive Summary
+This blog covers the mathematical definition of Jacobian and how it forms the mathematical basis of Automatic Differenation to its computational implementation using pointers, tapes and topological sorts.
+
+The core takeaway would thus be that: **Automatic Differentiation is the art of implementing the Chain Rule without the baggage of the Jacobian**
+
+    - **The Math** gives use the "Master Map" (J) and the operations ($Jv$ and $v^TJ$).
+    - **The Engineering** gives us the "Tape" and "Pullbacks" to execute those operations efficiently.
+    - **The Framework (PyTorch/JAX)** manages the "Topological Sort" and "Accumulation" so we can focus on building models instead of manually transposing trillion-element matrices.
 ___
