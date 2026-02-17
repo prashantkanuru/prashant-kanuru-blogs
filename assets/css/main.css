@@ -60,6 +60,15 @@ body {
   padding: 4rem 1.5rem;
 }
 
+.post-banner {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .post-title {
   font-family: 'Outfit', sans-serif;
   font-size: 3rem;

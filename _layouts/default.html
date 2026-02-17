@@ -58,6 +58,9 @@
   <main class="container main-content">
     {% if page.title %}
     <header class="post-header">
+      {% if page.image %}
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="post-banner">
+      {% endif %}
       <h1 class="post-title">{{ page.title }}</h1>
       <div class="post-divider"></div>
     </header>
