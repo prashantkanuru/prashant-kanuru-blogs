@@ -3,6 +3,11 @@ layout: default
 title: "Jacobian, VJP Tape and Computational Graph aka AutoGrad"
 permalink: /automatic-differentiation-jacobian/
 category: fundamentals
+description: "Demystifying Automatic Differentiation in Deep Learning: A visual guide to Jacobians, VJP (Vector-Jacobian Products), and PyTorch's dynamic computational graph."
+keywords: [Automatic Differentiation, Jacobian, PyTorch Autograd, VJP, Computational Graph, Deep Learning, Machine Learning, Backpropagation]
+author: "Prashant Kanuru"
+date: 2026-02-17
+image: "/assets/images/ad-banner.png" # Placeholder/Example if you have one, or remove if not. Keeping for structure.
 ---
 # Demystifying Automatic Differentiation: The Lens of Jacobian, VJP Tape and Computational Graph
 
@@ -240,3 +245,26 @@ ___
 <!-- Load Custom Components -->
 <script type="text/babel" src="/prashant-kanuru-blogs/assets/js/ad-animation.jsx"></script>
 <script type="text/babel" src="/prashant-kanuru-blogs/assets/js/pytorch-pointer-animation.jsx"></script>
+
+<!-- SEO Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Demystifying Automatic Differentiation: The Lens of Jacobian, VJP Tape and Computational Graph",
+  "image": "https://prashantkanuru.github.io/prashant-kanuru-blogs/assets/images/ad_banner.png",
+  "author": {
+    "@type": "Person",
+    "name": "Prashant Kanuru",
+    "url": "https://prashantkanuru.github.io/"
+  },
+  "genre": "Deep Learning Fundamentals",
+  "keywords": "Automatic Differentiation, Jacobian, PyTorch, Backpropagation, Deep Learning",
+  "description": "A deep dive into the mathematics and engineering of Automatic Differentiation, exploring the Jacobian matrix, Vector-Jacobian Products (VJP), and how frameworks like PyTorch implement dynamic computational graphs.",
+  "datePublished": "2026-02-17",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://prashantkanuru.github.io/prashant-kanuru-blogs/automatic-differentiation-jacobian/"
+  }
+}
+</script>

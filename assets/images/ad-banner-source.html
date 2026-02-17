@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Banner Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify_content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000;
+        }
+
+        .banner {
+            width: 1200px;
+            /* Standard OG Image Size */
+            height: 630px;
+            background: radial-gradient(circle at 10% 20%, #1e1b4b 0%, #0f172a 40%, #020617 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Abstract Grid / Graph Background */
+        .grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        /* Glowing Nodes */
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            border: 2px solid rgba(168, 85, 247, 0.5);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            color: #e2e8f0;
+            font-size: 14px;
+        }
+
+        .node-1 {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            left: 70%;
+        }
+
+        .node-2 {
+            width: 80px;
+            height: 80px;
+            top: 50%;
+            left: 85%;
+            border-color: #ec4899;
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .node-3 {
+            width: 40px;
+            height: 40px;
+            top: 70%;
+            left: 60%;
+        }
+
+        .node-4 {
+            width: 50px;
+            height: 50px;
+            top: 30%;
+            left: 90%;
+        }
+
+        /* Connections (SVG Lines) */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Math Symbols Floating */
+        .math-symbol {
+            position: absolute;
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+
+        .sym-1 {
+            font-size: 120px;
+            top: -20px;
+            right: 50px;
+            transform: rotate(15deg);
+        }
+
+        .sym-2 {
+            font-size: 80px;
+            bottom: 50px;
+            left: 40%;
+            transform: rotate(-10deg);
+            color: rgba(168, 85, 247, 0.1);
+        }
+
+        .sym-3 {
+            font-size: 150px;
+            top: 40%;
+            right: 30%;
+            opacity: 0.05;
+        }
+
+
+        /* Content */
+        .content {
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .category {
+            font-family: 'JetBrains Mono', monospace;
+            color: #a855f7;
+            /* Purple Accent */
+            background: rgba(168, 85, 247, 0.1);
+            padding: 8px 16px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        h1 {
+            font-size: 72px;
+            line-height: 1.1;
+            margin: 0 0 20px 0;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 300;
+            color: #94a3b8;
+            margin: 0;
+        }
+
+        .highlight {
+            color: #6366f1;
+            font-weight: 400;
+        }
+
+        /* Gradient Orb */
+        .orb {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="banner">
+        <div class="grid"></div>
+        <div class="orb"></div>
+
+        <!-- Math Decor -->
+        <div class="math-symbol sym-1">J</div>
+        <div class="math-symbol sym-2">∇</div>
+        <div class="math-symbol sym-3">∂y/∂x</div>
+
+        <!-- Graph Nodes -->
+        <div class="node node-1">x₁</div>
+        <div class="node node-2">y</div>
+        <div class="node node-3">w</div>
+        <div class="node node-4">loss</div>
+
+        <svg class="connections">
+            <!-- Simple SVG lines connecting rough coordinates of nodes -->
+            <line x1="72%" y1="23%" x2="62%" y2="73%" stroke="rgba(99, 102, 241, 0.3)" stroke-width="2" />
+            <line x1="62%" y1="73%" x2="87%" y2="53%" stroke="rgba(236, 72, 153, 0.3)" stroke-width="2" />
+            <line x1="87%" y1="53%" x2="92%" y2="33%" stroke="rgba(99, 102, 241, 0.3)" stroke-width="2" />
+        </svg>
+
+        <div class="content">
+            <div class="category">DEEP LEARNING FUNDAMENTALS</div>
+            <h1>Automatic<br>Differentiation</h1>
+            <h2>The Lens of <span class="highlight">Jacobian</span>, <span class="highlight">VJP Tape</span>,<br>and
+                Computational Graph</h2>
+        </div>
+    </div>
+
+</body>
+
+</html>
