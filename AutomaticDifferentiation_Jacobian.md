@@ -64,6 +64,8 @@ This computes the Vector-Jacobian Product.
 
 **Summary**: In AD, the **Jacobian is the goal** and the **Chain Rule is the path**. AD looks at the function as a "Graph of Jacobians" and multiplication of the local Jacobians together AD is able to map in the forward mode how a tiny change in input will lead to a change in output and in the reverse mode how a tiny change in output can be mapped to change in input (aka parameters).
 
+<div id="ad-animation-container"></div>
+
 ___
 
 In the next sub-section - I will be providing a small 101 on scalar vs vector valued functions.
@@ -202,6 +204,8 @@ Once the `"Tape"` is full of these pullback functions, the framework needs to ex
 
 ### A Double-Click on the process in PyTorch: `ctx` and the Dynamic Graph
 
+<div id="pytorch-pointer-animation-container"></div>
+
 In PyTorch, every operation that involves a tensor with `requires_grad = True` creates a **Node** in the computational graph. This node is an instance of `torch.autograd.Function`.
 
 - **The `ctx` (The Context Object)**: The `ctx` is the local memory for a specific operation. It acts as the "bridge" between the forward pass and the backward pass.
@@ -227,3 +231,12 @@ The core takeaway would thus be that: **Automatic Differentiation is the art of 
     - **The Engineering** gives us the "Tape" and "Pullbacks" to execute those operations efficiently.
     - **The Framework (PyTorch/JAX)** manages the "Topological Sort" and "Accumulation" so we can focus on building models instead of manually transposing trillion-element matrices.
 ___
+
+<!-- React and Babel from CDN -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- Load Custom Components -->
+<script type="text/babel" src="/prashant-kanuru-blogs/assets/js/ad-animation.jsx"></script>
+<script type="text/babel" src="/prashant-kanuru-blogs/assets/js/pytorch-pointer-animation.jsx"></script>
