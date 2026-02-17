@@ -31,7 +31,7 @@ Calculus in high-school or in an introductory 101 level is about a single variab
 The Jacobian ($J$) is a matrix that collects every possible first-order partial derivative of a vector-valued function. If the function $f$ maps $n$ inputs to $m$ outputs, the Jacobian is an $m \times n$ matrix:
 
 $$J = \begin{bmatrix}
-\frac{\partial y_1}{\partialx_1} & \cdots & \frac{\partial y_1}{\partial x_n}\\
+\frac{\partial y_1}{\partial x_1} & \cdots & \frac{\partial y_1}{\partial x_n}\\
 \vdots & \ddots & \vdots \\
 \frac{\partial y_m}{\partial x_1} & \cdots & \frac{\partial y_m}{\partial x_n}
 \end{bmatrix}$$
@@ -88,7 +88,7 @@ To understand the Jacobian, it is very helpful to understand the basic differenc
         - **Connection to Jacobian**: The Jacobian of the scalar function by definition of Jacobian is a row vector ($1 \times n$).
             - Jacobian acts as a linear map in terms of a which captures the change in the scalar output for a small "nudge" in the input space $\mathbb{R}^n$.
 
-            $$\text{Change in Output (Scalar)} = \text{Jacobian(Row Vector)} \times \text{Nudge(Column Vector)} $$
+$$ \text{Change in Output (Scalar)} = \text{Jacobian(Row Vector)} \times \text{Nudge(Column Vector)} $$
     As a conclusion, even though a scalar function returns a single number, by the virtue of the domain being $\mathbb{R}^n$ it depends on many inputs and the **Gradient** captures the sensitivity of the scalar w.r.t all the inputs and in the language of **Jacobians** this gradient is just a Jacobian with only one row.
 
 **Vector Valued Functions**($f:\mathbb{R}^n \to f:\mathbb{R}^m$)
@@ -227,9 +227,9 @@ This blog covers the mathematical definition of Jacobian and how it forms the ma
 
 The core takeaway would thus be that: **Automatic Differentiation is the art of implementing the Chain Rule without the baggage of the Jacobian**
 
-    - **The Math** gives use the "Master Map" (J) and the operations ($Jv$ and $v^TJ$).
-    - **The Engineering** gives us the "Tape" and "Pullbacks" to execute those operations efficiently.
-    - **The Framework (PyTorch/JAX)** manages the "Topological Sort" and "Accumulation" so we can focus on building models instead of manually transposing trillion-element matrices.
+- **The Math** gives use the "Master Map" (J) and the operations ($Jv$ and $v^TJ$).
+- **The Engineering** gives us the "Tape" and "Pullbacks" to execute those operations efficiently.
+- **The Framework (PyTorch/JAX)** manages the "Topological Sort" and "Accumulation" so we can focus on building models instead of manually transposing trillion-element matrices.
 ___
 
 <!-- React and Babel from CDN -->
